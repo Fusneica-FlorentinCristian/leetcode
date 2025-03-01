@@ -1,21 +1,16 @@
 class Solution:
     def minDepth(self, root: Optional[TreeNode]) -> int:
-        if root is None:  
+        if root is None:
             return 0
-        
-        # we'll start at the extremes (leafs)
-        leftDepth = self.minDepth(root.left)
-        rightDepth = self.minDepth(root.right)
+        queue = [(root, 1)]
 
-        # it is a leaf, so we will start the backtracking by "adding" this level to the total
-        if root.left is None and root.right is None:
-            return 1
-        
-        # if it has a child, get the length of it
-        if root.left is None:
-            return 1 + rightDepth
-        if root.right is None:
-            return 1 + leftDepth
+        while queue:
+            node, depth = queue.pop(0)
 
-        # if it has two children, get the min of their lengths
-        return min(leftDepth, rightDepth) + 1  
+            if node.left is None and node.right is None:
+                return depth
+
+            if node.left:
+                queue.append((node.left, depth + 1))
+            if node.right:
+                queue.append((node.right, depth + 1))
