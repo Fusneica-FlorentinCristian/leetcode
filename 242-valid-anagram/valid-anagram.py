@@ -7,7 +7,18 @@ class Solution:
             else:
                 mydict[x] = 1
         return mydict
+    def removeFromDict(self, t:str, mydict:dict) -> bool:
+        for x in t:
+            if x not in mydict:
+                return False
+            else:
+                mydict[x] -= 1
+                if mydict[x] < 0:
+                    return False
+
+        for i in mydict:
+            if mydict[i] != 0:
+                return False
+        return True
     def isAnagram(self, s: str, t: str) -> bool:
-        dicts = self.mapToDict(s)
-        dictt = self.mapToDict(t)
-        return dicts == dictt
+        return self.removeFromDict(t, self.mapToDict(s))
